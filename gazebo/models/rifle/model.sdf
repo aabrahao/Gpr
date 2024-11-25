@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version='1.9'>
+  <world name='mars'>
+
+    <!-- Sun light -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Terrain -->
+    <model name="terrain">
+      <static>true</static>
+      <include>
+        <uri>terrain/model.sdf</uri>
+      </include>
+    </model>
+
+    <!-- Robot -->
+    <include>
+      <uri>robot/model.sdf</uri>
+      <name>robot</name>
+      <pose>2.75268 1.0014 3.832279 0 0 0</pose>
+      <!-- TF Publisher -->
+      <plugin filename="ignition-gazebo-pose-publisher-system"
+        name="ignition::gazebo::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <publish_collision_pose>false</publish_collision_pose>
+        <publish_visual_pose>false</publish_visual_pose>
+        <publish_nested_model_pose>false</publish_nested_model_pose>
+        <update_frequency>20</update_frequency>
+      </plugin>
+      <!-- DIFF DRIVE PLUGIN / WHEELS CONTROLER -->
+      <plugin filename="ignition-gazebo-diff-drive-system"
+        name="ignition::gazebo::systems::DiffDrive">
+        <left_joint>rear_left_wheel_joint</left_joint>
+        <left_joint>front_left_wheel_joint</left_joint>
+        <right_joint>rear_right_wheel_joint</right_joint>
+        <right_joint>front_right_wheel_joint</right_joint>
+        <wheel_separation>1</wheel_separation>
+        <wheel_radius>0.1651</wheel_radius>
+        <odom_publish_frequency>20</odom_publish_frequency>
+        <frame_id>odom</frame_id>
+        <child_frame_id>base_link</child_frame_id>
+        <topic>cmd_vel</topic>
+      </plugin>
+    </include>
+  </world>
+</sdf>
