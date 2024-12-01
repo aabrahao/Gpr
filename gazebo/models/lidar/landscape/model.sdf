@@ -3,9 +3,8 @@
   <model name='terrain'>
     <pose>0 0 0 0 0 0</pose>
     <static>1</static>
-    <link name='link'>
 
-      <!-- Collision -->
+    <link name='link'>
       <collision name='collision'>
         <geometry>
           <mesh>
@@ -14,8 +13,6 @@
           </mesh>
         </geometry>
       </collision>
-
-      <!-- Visual -->
       <visual name='visual'>
         <cast_shadows>1</cast_shadows>
         <geometry>
@@ -33,7 +30,7 @@
           <diffuse>1 1 1 1</diffuse>
         </material>
       </visual>
-
     </link>
+
   </model>
 </sdf>

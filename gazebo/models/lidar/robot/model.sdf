@@ -443,8 +443,6 @@
           <diffuse>1 0 0 1</diffuse>
         </material>
       </visual>
-
-
       <sensor name='os1_32' type='gpu_lidar'>
         <topic>lidar</topic>
         <visualize>true</visualize>
@@ -472,15 +470,11 @@
           </range>
         </lidar>
       </sensor>
-
-
-
     </link>
     <joint name='lidar_joint' type='fixed'>
       <child>lidar_link</child>
       <parent>base_link</parent>
     </joint>
-
 
     <static>0</static>
   </model>

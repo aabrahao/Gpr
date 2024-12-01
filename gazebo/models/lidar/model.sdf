@@ -1,20 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<!--
-  You can echo lidar messages using:
-    gz topic -l
-    gz topic -e -t /lidar
-    gz topic -i -t /lidar
-
-  <pose>x y z roll pitch yaw</pose>
-      
-  <gui>
-    <plugin filename="VisualizeLidar" name="Visualize Lidar">
-    </plugin>
-  </gui>
-
--->
-
 <sdf version='1.9'>
   <world name='gpr'>
 
