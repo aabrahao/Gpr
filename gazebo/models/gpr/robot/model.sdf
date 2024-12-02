@@ -45,8 +45,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
       <collision name="motor_rear_right_collision">
@@ -67,8 +68,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
       <collision name="motor_back_left_collision">
@@ -89,8 +91,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
       <collision name="motor_back_right_collision">
@@ -111,8 +114,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
 
@@ -121,7 +125,7 @@
         <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
         <geometry>
           <box>
-            <size>0.22860 0.031 0.061</size>
+            <size>0.22860 0.031 0.062</size>
           </box>
         </geometry>
       </collision>
@@ -129,19 +133,20 @@
         <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
         <geometry>
           <box>
-            <size>0.22860 0.031 0.061</size>
+            <size>0.22860 0.031 0.062</size>
           </box>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
       <collision name="frame_rear_right_collision">
         <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
         <geometry>
           <box>
-            <size>0.22860 0.031 0.061</size>
+            <size>0.22860 0.031 0.062</size>
           </box>
         </geometry>
       </collision>
@@ -149,12 +154,13 @@
         <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
         <geometry>
           <box>
-            <size>0.22860 0.031 0.061</size>
+            <size>0.22860 0.031 0.062</size>
           </box>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
 
@@ -175,12 +181,14 @@
           </box>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 1.0</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
         </material>
       </visual>
 
       <!-- PV -->
+      <!--
       <visual name="pv_left_visual">
         <pose>0 0.2667 0.22553 0 0 0</pose>
         <geometry>
@@ -189,7 +197,7 @@
           </box>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 0.5</diffuse>
+          <diffuse> 0.8 0.8 0.8 0.25</diffuse>
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
@@ -201,10 +209,11 @@
           </box>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 0.5</diffuse>
+          <diffuse> 0.8 0.8 0.8 0.25</diffuse>
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
+      -->
 
       <!-- GPS -->
       <visual name="gps_visual">
@@ -216,8 +225,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 0.5</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
         </material>
       </visual>
       <visual name="gps_pole_visual">
@@ -229,58 +239,9 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse> 1.0 0.0 0.0 0.5</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
-        </material>
-      </visual>
-
-      <!-- Origin -->
-      <visual name="origin_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <sphere>
-            <radius>0.02</radius>
-          </sphere>
-        </geometry>
-        <material>
-          <diffuse>1 0 0 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
-        </material>
-      </visual>
-      <visual name="origin_x_visual">
-        <pose>0.5 0 0 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>1 0.01 0.01</size>
-          </box>
-        </geometry>
-        <material>
-          <diffuse>1 0 0 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
-        </material>
-      </visual>
-      <visual name="origin_y_visual">
-        <pose>0 0.5 0 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.01 1 0.01</size>
-          </box>
-        </geometry>
-        <material>
-          <diffuse>0 1 0 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
-        </material>
-      </visual>
-      <visual name="origin_z_visual">
-        <pose>0 0 0.5 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.01 0.01 1</size>
-          </box>
-        </geometry>
-        <material>
-          <diffuse>0 0 1 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
         </material>
       </visual>
 
@@ -294,8 +255,9 @@
           </mesh>
         </geometry>
         <material>
-          <diffuse> 1.0 0.6 0.0 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.25 0.25 0.25 1</ambient>
+          <diffuse> 0.25 0.25 0.25 1</diffuse>
+          <specular>0.25 0.25 0.25 1</specular>
         </material>
       </visual>
 
@@ -354,10 +316,12 @@
           </mesh>
         </geometry>
         <material>
-          <diffuse> 0.1 0.1 0.1 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
+      <!--
       <visual name="collision_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -371,6 +335,7 @@
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
+      -->
     </link>
     <joint name="front_left_wheel_joint" type="revolute">
       <child>front_left_wheel_link</child>
@@ -442,10 +407,12 @@
           </mesh>
         </geometry>
         <material>
-          <diffuse> 0.1 0.1 0.1 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
+      <!--
       <visual name="collision_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -459,6 +426,7 @@
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
+    -->
     </link>
     <joint name="front_right_wheel_joint" type="revolute">
       <child>front_right_wheel_link</child>
@@ -530,10 +498,12 @@
           </mesh>
         </geometry>
         <material>
-          <diffuse> 0.1 0.1 0.1 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
+      <!--
       <visual name="collision_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -547,6 +517,7 @@
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
+    -->
     </link>
     <joint name="rear_left_wheel_joint" type="revolute">
       <child>rear_left_wheel_link</child>
@@ -618,10 +589,12 @@
           </mesh>
         </geometry>
         <material>
-          <diffuse> 0.1 0.1 0.1 1</diffuse>
-          <specular>0.5 0.5 0.5 1</specular>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
         </material>
       </visual>
+      <!--
       <visual name="collision_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -635,6 +608,7 @@
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
+      -->
     </link>
     <joint name="rear_right_wheel_joint" type="revolute">
       <child>rear_right_wheel_link</child>
@@ -682,8 +656,9 @@
           </cylinder>
         </geometry>
         <material>
-          <ambient>1 0 0 1</ambient>
-          <diffuse>1 0 0 1</diffuse>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
         </material>
       </visual>
       <sensor name='os1_32' type='gpu_lidar'>
