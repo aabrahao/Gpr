@@ -3,27 +3,14 @@
   gz_topic_name: "cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
   gz_type_name: "gz.msgs.Twist"
-  subscriber_queue: 5       # Default 10
-  publisher_queue: 6        # Default 10
-  lazy: false               # Default "false"
-  direction: BIDIRECTIONAL  # Default "BIDIRECTIONAL" - Bridge both directions
-                            # "GZ_TO_ROS" - Bridge Gz topic to ROS
-                            # "ROS_TO_GZ" - Bridge ROS topic to Gz
-# Lidar
+  direction: BIDIRECTIONAL
 - ros_topic_name: "lidar"
   gz_topic_name: "lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"
-  subscriber_queue: 5
-  publisher_queue: 6
-  lazy: false
   direction: GZ_TO_ROS
-
-#- ros_topic_name: "lidar/points"
-#  gz_topic_name: "lidar/points"
-#  ros_type_name: "gz.msgs.PointCloudPacked"
-#  gz_type_name: "sensor_msgs/msg/PointCloud2"
-#  #subscriber_queue: 5
-#  #publisher_queue: 6
-#  #lazy: true
-#  direction: GZ_TO_ROS
+- ros_topic_name: "lidar/points"
+  gz_topic_name: "lidar/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
