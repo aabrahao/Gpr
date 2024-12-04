@@ -1,0 +1,36 @@
+-- Found ament_cmake: 2.5.2 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found ament_lint_auto: 0.17.1 (/opt/ros/jazzy/share/ament_lint_auto/cmake)
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/build/gpr_robot_description
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/materials/scripts/rock_texture_1.material
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/materials/scripts/sand_pebbles.material
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/materials/textures/rock_texture_1.png
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/materials/textures/sand_pebbles.png
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/meshes/terrain.stl
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/landscape/model.sdf
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/model.config
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/model.sdf
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/robot/meshes/chassis.stl
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/robot/meshes/wheel.stl
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/models/gpr_robot/robot/model.sdf
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/gpr_robot_description.dsv
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/gpr_robot_description.sh
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/ament_index/resource_index/package_run_dependencies/gpr_robot_description
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/ament_index/resource_index/parent_prefix_path/gpr_robot_description
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/ament_prefix_path.sh
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/ament_prefix_path.dsv
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/path.sh
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/environment/path.dsv
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/local_setup.bash
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/local_setup.sh
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/local_setup.zsh
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/local_setup.dsv
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/package.dsv
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/ament_index/resource_index/packages/gpr_robot_description
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/cmake/gpr_robot_descriptionConfig.cmake
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/cmake/gpr_robot_descriptionConfig-version.cmake
+-- Symlinking: /home/anthony/Projects/PhD/GPR/ros/gpr_ws/install/gpr_robot_description/share/gpr_robot_description/package.xml
