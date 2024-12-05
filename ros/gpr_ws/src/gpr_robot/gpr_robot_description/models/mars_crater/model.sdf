@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version='1.9'>
+    <model name="mars_crater">
+        <pose>0 0 0 0 0 0</pose>
+        <static>true</static>
+        <link name='terrain'>
+            <gravity>false</gravity>
+            <self_collide>false</self_collide>
+            <enable_wind>false</enable_wind>
+            <kinematic>false</kinematic>
+            <collision name='collision'>
+                <geometry>
+                    <mesh>
+                        <scale>0.1 0.1 0.025</scale>
+                        <uri>package://gpr_robot_description/models/mars_crater/meshes/terrain.stl</uri>
+                    </mesh>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <cast_shadows>1</cast_shadows>
+                <geometry>
+                    <mesh>
+                        <scale>0.1 0.1 0.025</scale>
+                        <uri>package://gpr_robot_description/models/mars_crater/meshes/terrain.stl</uri>
+                    </mesh>
+                </geometry>
+                <material>
+                    <!--Desert Sand-->
+                    <ambient> 0.824 0.706 0.549 1</ambient>
+                    <diffuse> 0.824 0.706 0.549 1</diffuse>
+                    <specular>0.824 0.706 0.549 1</specular>
+                    <!--Mountain Grey
+                    <ambient> 0.663 0.663 0.663 1</ambient>
+                    <diffuse> 0.663 0.663 0.663 1</diffuse>
+                    <specular>0.663 0.663 0.663 1</specular>
+                    -->
+                </material>
+            </visual>
+        </link>
+    </model>
+</sdf>

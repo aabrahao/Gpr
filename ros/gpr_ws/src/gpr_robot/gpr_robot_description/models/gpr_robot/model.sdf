@@ -1,520 +1,191 @@
-<?xml version='1.0' encoding='utf-8'?>
-
+<?xml version="1.0" ?>
 <sdf version='1.9'>
-  <world name='gpr_robot'>
+  <model name='gpr_robot' canonical_link='base_link'>
+    <static>false</static>
 
-    <physics name="1ms" type="ignored">
-      <max_step_size>0.001</max_step_size>
-      <real_time_factor>1.0</real_time_factor>
-    </physics>
+    <!-- Chassis -->
+    <link name='base_link'>
+      <pose relative_to='__model__'>0 0 0 0 0 0</pose>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <enable_wind>false</enable_wind>
+      <kinematic>false</kinematic>
+      <inertial>
+        <mass>46.064</mass>
+        <inertia>
+          <ixx>0.615397</ixx>
+          <ixy>-0.0240585</ixy>
+          <ixz>-0.120749</ixz>
+          <iyy>1.75388</iyy>
+          <iyz>-0.0028322</iyz>
+          <izz>2.03641</izz>
+        </inertia>
+      </inertial>
 
-    <!-- Pluging -->
-    <plugin
-      filename="gz-sim-physics-system"
-      name="gz::sim::systems::Physics">
-    </plugin>
-    <plugin
-      filename="gz-sim-scene-broadcaster-system"
-      name="gz::sim::systems::SceneBroadcaster">
-    </plugin>
-    <plugin filename="gz-sim-imu-system"
-      name="gz::sim::systems::Imu">
-    </plugin>
-    <plugin
-      filename="gz-sim-sensors-system"
-      name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
-    </plugin>
+      <!-- Motors -->
+      <collision name='motor_rear_left_collision'>
+        <pose>0.56092 0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='motor_rear_left_visual'>
+        <pose>0.56092 0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
+      <collision name='motor_rear_right_collision'>
+        <pose>0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='motor_rear_right_visual'>
+        <pose>0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
+      <collision name='motor_back_left_collision'>
+        <pose>-0.56092 0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='motor_back_left_visual'>
+        <pose>-0.56092 0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
+      <collision name='motor_back_right_collision'>
+        <pose>-0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='motor_back_right_visual'>
+        <pose>-0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0525</radius>
+            <length>0.14465</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
 
-    <gui fullscreen="0">
-      <!-- 3D scene -->
-      <plugin filename="MinimalScene" name="3D View">
-        <gz-gui>
-          <title>3D View</title>
-          <property type="bool" key="showTitleBar">false</property>
-          <property type="string" key="state">docked</property>
-        </gz-gui>
-        <engine>ogre2</engine>
-        <scene>scene</scene>
-        <ambient_light>0.4 0.4 0.4</ambient_light>
-        <background_color>0.8 0.8 0.8</background_color>
-        <camera_pose>-6 0 6 0 0.5 0</camera_pose>
-        <camera_clip>
-          <near>0.25</near>
-          <far>25000</far>
-        </camera_clip>
-      </plugin>
-      <!-- Plugins that add functionality to the scene -->
-      <plugin filename="EntityContextMenuPlugin" name="Entity context menu">
-        <gz-gui>
-          <property key="state" type="string">floating</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="GzSceneManager" name="Scene Manager">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="InteractiveViewControl" name="Interactive view control">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="CameraTracking" name="Camera Tracking">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="MarkerManager" name="Marker manager">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="SelectEntities" name="Select Entities">
-        <gz-gui>
-          <anchors target="Select entities">
-            <line own="right" target="right" />
-            <line own="top" target="top" />
-          </anchors>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="VisualizationCapabilities" name="Visualization Capabilities">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <plugin filename="Spawn" name="Spawn Entities">
-        <gz-gui>
-          <anchors target="Select entities">
-            <line own="right" target="right" />
-            <line own="top" target="top" />
-          </anchors>
-          <property key="resizable" type="bool">false</property>
-          <property key="width" type="double">5</property>
-          <property key="height" type="double">5</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-        </gz-gui>
-      </plugin>
-      <!-- World control -->
-      <plugin filename="WorldControl" name="World control">
-        <gz-gui>
-          <title>World control</title>
-          <property type="bool" key="showTitleBar">false</property>
-          <property type="bool" key="resizable">false</property>
-          <property type="double" key="height">72</property>
-          <property type="double" key="width">121</property>
-          <property type="double" key="z">1</property>
-          <property type="string" key="state">floating</property>
-          <anchors target="3D View">
-            <line own="left" target="left" />
-            <line own="bottom" target="bottom" />
-          </anchors>
-        </gz-gui>
-        <play_pause>true</play_pause>
-        <step>true</step>
-        <start_paused>true</start_paused>
-        <use_event>true</use_event>
-      </plugin>
-      <!-- World statistics -->
-      <plugin filename="WorldStats" name="World stats">
-        <gz-gui>
-          <title>World stats</title>
-          <property type="bool" key="showTitleBar">false</property>
-          <property type="bool" key="resizable">false</property>
-          <property type="double" key="height">110</property>
-          <property type="double" key="width">290</property>
-          <property type="double" key="z">1</property>
-          <property type="string" key="state">floating</property>
-          <anchors target="3D View">
-            <line own="right" target="right" />
-            <line own="bottom" target="bottom" />
-          </anchors>
-        </gz-gui>
-        <sim_time>true</sim_time>
-        <real_time>true</real_time>
-        <real_time_factor>true</real_time_factor>
-        <iterations>true</iterations>
-      </plugin>
-      <!-- Insert simple shapes -->
-      <plugin filename="Shapes" name="Shapes">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="x" type="double">0</property>
-          <property key="y" type="double">0</property>
-          <property key="width" type="double">250</property>
-          <property key="height" type="double">50</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-          <property key="cardBackground" type="string">#666666</property>
-        </gz-gui>
-      </plugin>
-      <!-- Insert lights -->
-      <plugin filename="Lights" name="Lights">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="x" type="double">250</property>
-          <property key="y" type="double">0</property>
-          <property key="width" type="double">150</property>
-          <property key="height" type="double">50</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-          <property key="cardBackground" type="string">#666666</property>
-        </gz-gui>
-      </plugin>
-      <!-- Translate / rotate -->
-      <plugin filename="TransformControl" name="Transform control">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="x" type="double">0</property>
-          <property key="y" type="double">50</property>
-          <property key="width" type="double">250</property>
-          <property key="height" type="double">50</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-          <property key="cardBackground" type="string">#777777</property>
-        </gz-gui>
-      </plugin>
-      <!-- Screenshot -->
-      <plugin filename="Screenshot" name="Screenshot">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="x" type="double">250</property>
-          <property key="y" type="double">50</property>
-          <property key="width" type="double">50</property>
-          <property key="height" type="double">50</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-          <property key="cardBackground" type="string">#777777</property>
-        </gz-gui>
-      </plugin>
-      <!-- Video recorder -->
-      <plugin filename="VideoRecorder" name="VideoRecorder">
-        <gz-gui>
-          <property key="resizable" type="bool">false</property>
-          <property key="x" type="double">300</property>
-          <property key="y" type="double">50</property>
-          <property key="width" type="double">50</property>
-          <property key="height" type="double">50</property>
-          <property key="state" type="string">floating</property>
-          <property key="showTitleBar" type="bool">false</property>
-          <property key="cardBackground" type="string">#777777</property>
-        </gz-gui>
-        <record_video>
-          <use_sim_time>true</use_sim_time>
-          <lockstep>false</lockstep>
-          <bitrate>4000000</bitrate>
-        </record_video>
-      </plugin>
-      <!-- Inspector -->
-      <plugin filename="ComponentInspector" name="Component inspector">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-      <!-- Entity tree -->
-      <plugin filename="EntityTree" name="Entity tree">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-      <!-- View angle -->
-      <plugin filename="ViewAngle" name="View angle">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-      <!-- KeyPublisher plugin-->
-      <plugin filename="KeyPublisher" name="Key Publisher">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-      <!-- Lidar plugin-->
-      <plugin filename="VisualizeLidar" name="Visualize Lidar">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-      <!-- Lidar plugin-->
-      <plugin filename="Teleop" name="Teleop">
-        <gz-gui>
-          <property type="string" key="state">docked_collapsed</property>
-        </gz-gui>
-      </plugin>
-    </gui>
+      <!-- Frame -->
+      <collision name='frame_rear_left_collision'>
+        <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
+        <geometry>
+          <box>
+            <size>0.22860 0.031 0.062</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='frame_rear_left_visual'>
+        <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
+        <geometry>
+          <box>
+            <size>0.22860 0.031 0.062</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
+      <collision name='frame_rear_right_collision'>
+        <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
+        <geometry>
+          <box>
+            <size>0.22860 0.031 0.062</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='frame_rear_right_visual'>
+        <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
+        <geometry>
+          <box>
+            <size>0.22860 0.031 0.062</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
 
-    <!-- Sun light -->
-    <light type="directional" name="sun">
-      <cast_shadows>true</cast_shadows>
-      <pose>0 0 10 0 0 0</pose>
-      <diffuse>0.8 0.8 0.8 1</diffuse>
-      <specular>0.2 0.2 0.2 1</specular>
-      <attenuation>
-        <range>1000</range>
-        <constant>0.9</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <direction>-0.5 0.1 -0.9</direction>
-    </light>
+      <!-- GPR -->
+      <collision name='gpr_collision'>
+        <pose>0 0 -0.30602 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.60600 0.39400 0.18830</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='gpr__visual'>
+        <pose>0 0 -0.30602 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.60600 0.39400 0.18830</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.5 0 0 1</ambient>
+          <diffuse>0.5 0 0 1</diffuse>
+          <specular>0.5 0 0 1</specular>
+        </material>
+      </visual>
 
-    <!-- Landscape +++++++++++++++++++++++++++++++++++++ -->
-    
-    <model name="landscape">
-      <pose>0 0 0 0 0 0</pose>
-      <static>true</static>
-      <link name='terrain'>
-        <pose>0 0 0 0 0 0</pose>
-        <gravity>false</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <scale>0.1 0.1 0.025</scale>
-              <uri>meshes/terrain.stl</uri>
-            </mesh>
-          </geometry>
-        </collision>
-        <visual name='visual'>
-          <cast_shadows>1</cast_shadows>
-          <geometry>
-            <mesh>
-              <scale>0.1 0.1 0.025</scale>
-              <uri>meshes/terrain.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <pbr>
-              <metal>
-                <albedo_map>materials/textures/sand_pebbles.png</albedo_map>
-              </metal>
-            </pbr>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-    
-    <!-- Robot +++++++++++++++++++++++++++++++++++++ -->
-
-    <!-- Robot -->
-    <model name="gpr_robot" canonical_link='base_link'>
-      <pose relative_to='world'>0 0 1.0 0 0 0</pose>
-      <static>false</static>
-      <!-- Chassis -->
-      <link name="base_link">
-        <pose relative_to='__model__'>0 0 0 0 0 0</pose>
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <inertial>
-          <mass>46.064</mass>
-          <inertia>
-            <ixx>0.615397</ixx>
-            <ixy>-0.0240585</ixy>
-            <ixz>-0.120749</ixz>
-            <iyy>1.75388</iyy>
-            <iyz>-0.0028322</iyz>
-            <izz>2.03641</izz>
-          </inertia>
-        </inertial>
-
-        <!-- Motors -->
-        <collision name="motor_rear_left_collision">
-          <pose>0.56092 0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-        </collision>
-        <visual name="motor_rear_left_visual">
-          <pose>0.56092 0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-        <collision name="motor_rear_right_collision">
-          <pose>0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-        </collision>
-        <visual name="motor_rear_right_visual">
-          <pose>0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-        <collision name="motor_back_left_collision">
-          <pose>-0.56092 0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-        </collision>
-        <visual name="motor_back_left_visual">
-          <pose>-0.56092 0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-        <collision name="motor_back_right_collision">
-          <pose>-0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-        </collision>
-        <visual name="motor_back_right_visual">
-          <pose>-0.56092 -0.20875 -0.38671 1.5708 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0525</radius>
-              <length>0.14465</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-
-        <!-- Frame -->
-        <collision name="frame_rear_left_collision">
-          <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
-          <geometry>
-            <box>
-              <size>0.22860 0.031 0.062</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="frame_rear_left_visual">
-          <pose>-0.44757 0.22456 -0.37413 0 -1.13446 0</pose>
-          <geometry>
-            <box>
-              <size>0.22860 0.031 0.062</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-        <collision name="frame_rear_right_collision">
-          <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
-          <geometry>
-            <box>
-              <size>0.22860 0.031 0.062</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="frame_rear_right_visual">
-          <pose>-0.44757 -0.22456 -0.37413 0 -1.13446 0</pose>
-          <geometry>
-            <box>
-              <size>0.22860 0.031 0.062</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-
-        <!-- GPR -->
-        <collision name="gpr_collision">
-          <pose>0 0 -0.30602 0 0 0</pose>
-          <geometry>
-            <box>
-              <size>0.60600 0.39400 0.18830</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="gpr__visual">
-          <pose>0 0 -0.30602 0 0 0</pose>
-          <geometry>
-            <box>
-              <size>0.60600 0.39400 0.18830</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.5 0 0 1</ambient>
-            <diffuse>0.5 0 0 1</diffuse>
-            <specular>0.5 0 0 1</specular>
-          </material>
-        </visual>
-
-        <!-- PV -->
-        <!--
-      <visual name="pv_left_visual">
+      <!-- PV -->
+      <!--
+      <visual name='pv_left_visual'>
         <pose>0 0.2667 0.22553 0 0 0</pose>
         <geometry>
           <box>
@@ -526,7 +197,7 @@
           <specular>0.5 0.5 0.5 1</specular>
         </material>
       </visual>
-      <visual name="pv_right_visual">
+      <visual name='pv_right_visual'>
         <pose>0 -0.2667 0.22553 0 0 0</pose>
         <geometry>
           <box>
@@ -540,164 +211,164 @@
       </visual>
       -->
 
-        <!-- GPS -->
-        <visual name="gps_visual">
-          <pose>-0.58619 0.19456 0.66055 0 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.088</radius>
-              <length>0.07</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient> 0.5 0.0 0.5 1</ambient>
-            <diffuse> 0.5 0.0 0.5 1</diffuse>
-            <specular>0.5 0.0 0.5 1</specular>
-          </material>
-        </visual>
-        <visual name="gps_pole_visual">
-          <pose>-0.58619 0.19456 0.16102 0 0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.016</radius>
-              <length>0.9214</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient> 0.5 0.0 0.5 1</ambient>
-            <diffuse> 0.5 0.0 0.5 1</diffuse>
-            <specular>0.5 0.0 0.5 1</specular>
-          </material>
-        </visual>
+      <!-- GPS -->
+      <visual name='gps_visual'>
+        <pose>-0.58619 0.19456 0.66055 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.088</radius>
+            <length>0.07</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
+        </material>
+      </visual>
+      <visual name='gps_pole_visual'>
+        <pose>-0.58619 0.19456 0.16102 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.9214</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
+        </material>
+      </visual>
 
-        <!-- Chassis mesh -->
-        <visual name="base_link_visual">
-          <pose>0 0 0 1.5708 0 1.5708</pose>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>meshes/chassis.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <ambient> 0.25 0.25 0.25 1</ambient>
-            <diffuse> 0.25 0.25 0.25 1</diffuse>
-            <specular>0.25 0.25 0.25 1</specular>
-          </material>
-        </visual>
+      <!-- Chassis mesh -->
+      <visual name='base_link_visual'>
+        <pose>0 0 0 1.5708 0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://gpr_robot_description/models/gpr_robot/meshes/chassis.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0.25 0.25 0.25 1</ambient>
+          <diffuse> 0.25 0.25 0.25 1</diffuse>
+          <specular>0.25 0.25 0.25 1</specular>
+        </material>
+      </visual>
 
-        <!-- IMU -->
-        <sensor name="imu_sensor" type="imu">
-          <always_on>1</always_on>
-          <update_rate>1</update_rate>
-          <visualize>true</visualize>
-          <topic>imu</topic>
-        </sensor>
+      <!-- IMU -->
+      <sensor name='imu_sensor' type='imu'>
+        <always_on>1</always_on>
+        <update_rate>1</update_rate>
+        <visualize>true</visualize>
+        <topic>imu</topic>
+      </sensor>
 
-        <!-- Lidar -->
-        <sensor name='os1_32' type='gpu_lidar'>
-          <pose>0.62046 0 0.13303 0 0.50562677122 0</pose>
-          <topic>lidar</topic>
-          <visualize>true</visualize>
-          <always_on>true</always_on>
-          <update_rate>10</update_rate>
-          <lidar>
-            <scan>
-              <horizontal>
-                <samples>1024</samples>
-                <resolution>1</resolution>
-                <min_angle>-1.396263</min_angle>
-                <max_angle>1.396263</max_angle>
-              </horizontal>
-              <vertical>
-                <samples>32</samples>
-                <resolution>1</resolution>
-                <min_angle>-0.261799</min_angle>
-                <max_angle>0.261799</max_angle>
-              </vertical>
-            </scan>
-            <range>
-              <min>0.1</min>
-              <max>120.0</max>
-              <resolution>0.01</resolution>
-            </range>
-          </lidar>
-        </sensor>
-        <visual name="lidar_visual">
-          <pose>0.62046 0 0.13303 0 0.50562677122 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.05</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient> 0.5 0.0 0.5 1</ambient>
-            <diffuse> 0.5 0.0 0.5 1</diffuse>
-            <specular>0.5 0.0 0.5 1</specular>
-          </material>
-        </visual>
+      <!-- Lidar -->
+      <sensor name='os1_32' type='gpu_lidar'>
+        <pose>0.62046 0 0.13303 0 0.50562677122 0</pose>
+        <topic>lidar</topic>
+        <visualize>true</visualize>
+        <always_on>true</always_on>
+        <update_rate>10</update_rate>
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>1024</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.396263</min_angle>
+              <max_angle>1.396263</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>32</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.261799</min_angle>
+              <max_angle>0.261799</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>120.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </lidar>
+      </sensor>
+      <visual name='lidar_visual'>
+        <pose>0.62046 0 0.13303 0 0.50562677122 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient> 0.5 0.0 0.5 1</ambient>
+          <diffuse> 0.5 0.0 0.5 1</diffuse>
+          <specular>0.5 0.0 0.5 1</specular>
+        </material>
+      </visual>
 
-      </link>
+    </link>
 
-      <!-- Front left Wheel -->
-      <link name="front_left_wheel_link">
-        <pose relative_to="base_link">0.52294 0.35953 -0.40442 1.5708 0 0</pose>
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <inertial>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <length>0.10231</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>0.5</mu>
-                <mu2>1</mu2>
-                <slip1>0.00062</slip1>
-                <slip2>0</slip2>
-                <fdir1>0 0 1</fdir1>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>meshes/wheel.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <ambient> 0.02 0.02 0.02 1</ambient>
-            <diffuse> 0.02 0.02 0.02 1</diffuse>
-            <specular>0.02 0.02 0.02 1</specular>
-          </material>
-        </visual>
-        <!--
-      <visual name="collision_visual">
+    <!-- Front left Wheel -->
+    <link name='front_left_wheel_link'>
+      <pose relative_to='base_link'>0.52294 0.35953 -0.40442 1.5708 0 0</pose>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <enable_wind>false</enable_wind>
+      <kinematic>false</kinematic>
+      <inertial>
+        <mass>2.637</mass>
+        <inertia>
+          <ixx>0.02467</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.04411</iyy>
+          <iyz>0</iyz>
+          <izz>0.02467</izz>
+        </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <length>0.10231</length>
+            <radius>0.1651</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.5</mu>
+              <mu2>1</mu2>
+              <slip1>0.00062</slip1>
+              <slip2>0</slip2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://gpr_robot_description/models/gpr_robot/meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
+        </material>
+      </visual>
+      <!--
+      <visual name='collision_visual'>
         <geometry>
           <cylinder>
             <length>0.10231</length>
@@ -710,82 +381,82 @@
         </material>
       </visual>
       -->
-      </link>
-      <joint name="front_left_wheel_joint" type="revolute">
-        <pose relative_to='front_left_wheel_link'/>
-        <child>front_left_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz expressed_in='__model__'>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-        </axis>
-      </joint>
+    </link>
+    <joint name='front_left_wheel_joint' type='revolute'>
+      <pose relative_to='front_left_wheel_link' />
+      <child>front_left_wheel_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz expressed_in='__model__'>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
 
-      <!-- Front right Wheel -->
-      <link name="front_right_wheel_link">
-        <pose relative_to="base_link">0.52294 -0.35953 -0.40442 1.5708 0 0</pose>
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <inertial>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <length>0.10231</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>0.5</mu>
-                <mu2>1</mu2>
-                <slip1>0.00062</slip1>
-                <slip2>0</slip2>
-                <fdir1>0 0 1</fdir1>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>meshes/wheel.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <ambient> 0.02 0.02 0.02 1</ambient>
-            <diffuse> 0.02 0.02 0.02 1</diffuse>
-            <specular>0.02 0.02 0.02 1</specular>
-          </material>
-        </visual>
-        <!--
-      <visual name="collision_visual">
+    <!-- Front right Wheel -->
+    <link name='front_right_wheel_link'>
+      <pose relative_to='base_link'>0.52294 -0.35953 -0.40442 1.5708 0 0</pose>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <enable_wind>false</enable_wind>
+      <kinematic>false</kinematic>
+      <inertial>
+        <mass>2.637</mass>
+        <inertia>
+          <ixx>0.02467</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.04411</iyy>
+          <iyz>0</iyz>
+          <izz>0.02467</izz>
+        </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <length>0.10231</length>
+            <radius>0.1651</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.5</mu>
+              <mu2>1</mu2>
+              <slip1>0.00062</slip1>
+              <slip2>0</slip2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://gpr_robot_description/models/gpr_robot/meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
+        </material>
+      </visual>
+      <!--
+      <visual name='collision_visual'>
         <geometry>
           <cylinder>
             <length>0.10231</length>
@@ -798,82 +469,82 @@
         </material>
       </visual>
     -->
-      </link>
-      <joint name="front_right_wheel_joint" type="revolute">
-        <pose relative_to='front_right_wheel_link'/>
-        <child>front_right_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz expressed_in='__model__'>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-        </axis>
-      </joint>
+    </link>
+    <joint name='front_right_wheel_joint' type='revolute'>
+      <pose relative_to='front_right_wheel_link' />
+      <child>front_right_wheel_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz expressed_in='__model__'>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
 
-      <!-- Rear left Wheel -->
-      <link name="rear_left_wheel_link">
-        <pose relative_to="base_link">-0.52294 0.35953 -0.40442 1.5708 0 0</pose>
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <inertial>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <length>0.10231</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>0.5</mu>
-                <mu2>1</mu2>
-                <slip1>0.00062</slip1>
-                <slip2>0</slip2>
-                <fdir1>0 0 1</fdir1>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>meshes/wheel.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <ambient> 0.02 0.02 0.02 1</ambient>
-            <diffuse> 0.02 0.02 0.02 1</diffuse>
-            <specular>0.02 0.02 0.02 1</specular>
-          </material>
-        </visual>
-        <!--
-      <visual name="collision_visual">
+    <!-- Rear left Wheel -->
+    <link name='rear_left_wheel_link'>
+      <pose relative_to='base_link'>-0.52294 0.35953 -0.40442 1.5708 0 0</pose>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <enable_wind>false</enable_wind>
+      <kinematic>false</kinematic>
+      <inertial>
+        <mass>2.637</mass>
+        <inertia>
+          <ixx>0.02467</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.04411</iyy>
+          <iyz>0</iyz>
+          <izz>0.02467</izz>
+        </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <length>0.10231</length>
+            <radius>0.1651</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.5</mu>
+              <mu2>1</mu2>
+              <slip1>0.00062</slip1>
+              <slip2>0</slip2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://gpr_robot_description/models/gpr_robot/meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
+        </material>
+      </visual>
+      <!--
+      <visual name='collision_visual'>
         <geometry>
           <cylinder>
             <length>0.10231</length>
@@ -886,82 +557,82 @@
         </material>
       </visual>
     -->
-      </link>
-      <joint name="rear_left_wheel_joint" type="revolute">
-        <pose relative_to="rear_left_wheel_link"/>
-        <child>rear_left_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz expressed_in='__model__'>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-        </axis>
-      </joint>
+    </link>
+    <joint name='rear_left_wheel_joint' type='revolute'>
+      <pose relative_to='rear_left_wheel_link' />
+      <child>rear_left_wheel_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz expressed_in='__model__'>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
 
-      <!-- Rear right Wheel -->
-      <link name="rear_right_wheel_link">
-        <pose relative_to="base_link">-0.52294 -0.35953 -0.40442 1.5708 0 0</pose>
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-        <enable_wind>false</enable_wind>
-        <kinematic>false</kinematic>
-        <inertial>
-          <mass>2.637</mass>
-          <inertia>
-            <ixx>0.02467</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.04411</iyy>
-            <iyz>0</iyz>
-            <izz>0.02467</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <length>0.10231</length>
-              <radius>0.1651</radius>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact>
-              <ode>
-                <kp>1e+07</kp>
-                <kd>1</kd>
-              </ode>
-            </contact>
-            <friction>
-              <ode>
-                <mu>0.5</mu>
-                <mu2>1</mu2>
-                <slip1>0.00062</slip1>
-                <slip2>0</slip2>
-                <fdir1>0 0 1</fdir1>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>meshes/wheel.stl</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <ambient> 0.02 0.02 0.02 1</ambient>
-            <diffuse> 0.02 0.02 0.02 1</diffuse>
-            <specular>0.02 0.02 0.02 1</specular>
-          </material>
-        </visual>
-        <!--
-      <visual name="collision_visual">
+    <!-- Rear right Wheel -->
+    <link name='rear_right_wheel_link'>
+      <pose relative_to='base_link'>-0.52294 -0.35953 -0.40442 1.5708 0 0</pose>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <enable_wind>false</enable_wind>
+      <kinematic>false</kinematic>
+      <inertial>
+        <mass>2.637</mass>
+        <inertia>
+          <ixx>0.02467</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.04411</iyy>
+          <iyz>0</iyz>
+          <izz>0.02467</izz>
+        </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <length>0.10231</length>
+            <radius>0.1651</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.5</mu>
+              <mu2>1</mu2>
+              <slip1>0.00062</slip1>
+              <slip2>0</slip2>
+              <fdir1>0 0 1</fdir1>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>package://gpr_robot_description/models/gpr_robot/meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0.02 0.02 0.02 1</ambient>
+          <diffuse> 0.02 0.02 0.02 1</diffuse>
+          <specular>0.02 0.02 0.02 1</specular>
+        </material>
+      </visual>
+      <!--
+      <visual name='collision_visual'>
         <geometry>
           <cylinder>
             <length>0.10231</length>
@@ -974,48 +645,47 @@
         </material>
       </visual>
       -->
-      </link>
-      <joint name="rear_right_wheel_joint" type="revolute">
-        <pose relative_to='rear_right_wheel_link'/>
-        <child>rear_right_wheel_link</child>
-        <parent>base_link</parent>
-        <axis>
-          <xyz expressed_in='__model__'>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-          <dynamics>
-            <spring_reference>0</spring_reference>
-            <spring_stiffness>0</spring_stiffness>
-          </dynamics>
-        </axis>
-      </joint>
+    </link>
+    <joint name='rear_right_wheel_joint' type='revolute'>
+      <pose relative_to='rear_right_wheel_link' />
+      <child>rear_right_wheel_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz expressed_in='__model__'>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
 
-      <!-- TF Publisher -->
-      <plugin filename="gz-sim-pose-publisher-system"
-        name="gz::sim::systems::PosePublisher">
-        <publish_link_pose>true</publish_link_pose>
-        <publish_collision_pose>false</publish_collision_pose>
-        <publish_visual_pose>false</publish_visual_pose>
-        <publish_nested_model_pose>false</publish_nested_model_pose>
-        <update_frequency>20</update_frequency>
-      </plugin>
-      <!-- Diff_drive plugin -->
-      <plugin filename="gz-sim-diff-drive-system"
-        name="gz::sim::systems::DiffDrive">
-        <left_joint>rear_left_wheel_joint</left_joint>
-        <left_joint>front_left_wheel_joint</left_joint>
-        <right_joint>rear_right_wheel_joint</right_joint>
-        <right_joint>front_right_wheel_joint</right_joint>
-        <wheel_separation>0.71882</wheel_separation>
-        <wheel_radius>0.1651</wheel_radius>
-        <odom_publish_frequency>1</odom_publish_frequency>
-        <frame_id>odom</frame_id>
-        <child_frame_id>base_link</child_frame_id>
-        <topic>cmd_vel</topic>
-      </plugin>
-    </model>
+    <!-- TF Publisher -->
+    <plugin filename='gz-sim-pose-publisher-system'
+      name='gz::sim::systems::PosePublisher'>
+      <publish_link_pose>true</publish_link_pose>
+      <publish_collision_pose>false</publish_collision_pose>
+      <publish_visual_pose>false</publish_visual_pose>
+      <publish_nested_model_pose>false</publish_nested_model_pose>
+      <update_frequency>20</update_frequency>
+    </plugin>
+    <!-- Diff_drive plugin -->
+    <plugin filename='gz-sim-diff-drive-system'
+      name='gz::sim::systems::DiffDrive'>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <left_joint>front_left_wheel_joint</left_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <wheel_separation>0.71882</wheel_separation>
+      <wheel_radius>0.1651</wheel_radius>
+      <odom_publish_frequency>1</odom_publish_frequency>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+      <topic>cmd_vel</topic>
+    </plugin>
 
-  </world>
+  </model>
 </sdf>
