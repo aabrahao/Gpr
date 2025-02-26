@@ -17,6 +17,10 @@ msg/_*.py
 build_isolated/
 devel_isolated/
 
+# Python
+__pycache__/
+*.py[cod]
+
 *.pyc
 *.iml
 *.swp
