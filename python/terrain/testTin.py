@@ -18,7 +18,6 @@ plt.plot(x, y, 'o')
 plt.grid()
 plt.show(block=False)
 
-
 # TIN
 points = np.column_stack((x, y))
 tri = Delaunay(points)
