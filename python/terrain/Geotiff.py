@@ -1,57 +1,105 @@
 import rasterio
-from rasterio import open
-from rasterio.plot import show
+from rasterio import open as ropen
 import Print as prt
 
-def extents(dataset):
-    xmin = dataset.bounds.left
-    xmax = dataset.bounds.right
-    ymin = dataset.bounds.bottom
-    ymax = dataset.bounds.top
+import numpy as np
+from rasterio.plot import show as rshow
+import matplotlib.pylab as plt
+from matplotlib import cbook, cm
+
+# Rasterio and nunpy
+# +-- column (x)
+# |     .(y, x)
+# row (y)
+#
+# (rows, columns) -> (y, x) : (height, width)
+#
+# Numpy is row-major order, elements are stored row by row
+# (i,j) -> (y,x)
+
+def filename(path):
+    return path + '.tif'
+
+def open(path):
+    return ropen( filename(path) )
+
+def mask(database, band = 1):
+    mask = database.read_masks(band)
+
+def name(database):
+    s = database.name.rsplit('/', 1)[-1]
+    s = s.replace('.tif','')
+    return s
+
+def data(database, band = 1):
+    z = database.read(band)
+    if np.issubdtype(z.dtype, np.floating):
+        m = database.read_masks(band)
+        z[m==0] = np.nan
+    return z
+
+def dem(database, band = 1):
+    xmin, ymin, xmax, ymax = extents(database)
+    z = data(database, band)
+    nx, ny = size(database)
+    x = np.linspace( xmin, xmax, nx)
+    y = np.linspace( ymin, ymax, ny)
+    return x, y, z
+
+def show(database, ax=None, colormap = cm.gist_earth, block=True):
+    if not ax:
+        fig, axes = plt.subplots()
+        axes.set_title(database.name)
+    else:
+        axes = ax
+    rshow(database, ax=axes)
+    if not ax:
+        plt.show(block=block)
+    return ax
+
+def pause():
+    plt.show(block=True)
+
+def extents(database):
+    xmin = database.bounds.left
+    xmax = database.bounds.right
+    ymin = database.bounds.bottom
+    ymax = database.bounds.top
     return xmin, ymin, xmax, ymax
 
-def bounds(dataset):
-    x, y = origin(dataset)
-    w, h = width(dataset)
-    return x, y, w, h
+def size(database):
+    ny = database.height
+    nx = database.width
+    return nx, ny
 
-def size(dataset):
-    iw = dataset.height
-    jw = dataset.width
-    return iw, jw
-
-def width(dataset):
-    xmin, ymin, xmax, ymax = extents(dataset)
-    return xmax - xmin, ymax - ymin
-
-def origin(dataset):
-    xmin, ymin, xmax, ymax = extents(dataset)
+def origin(database):
+    xmin, ymin, xmax, ymax = extents(database)
     return xmin, ymin
 
-def resolution(dataset):
-    sx = dataset.transform[0]
-    sy = -dataset.transform[4]
+def resolution(database):
+    sx = database.transform[0]
+    sy = -database.transform[4]
     return sx, sy
 
-def info(dataset):
-    prt.section('Dataset')
-    prt.field('File', dataset.name)
-    prt.field('Driver', dataset.driver)
-    prt.field('Mode', dataset.mode)
-    prt.field('Size', size(dataset))
-    prt.field('Bands', dataset.count)
-    prt.field('Indexes', dataset.indexes)
-    prt.field('Types', dataset.dtypes)
-    prt.field('Nodata', dataset.nodata)
-    prt.field('Coordnates', dataset.crs)
+def info(database):
+    prt.section('database')
+    prt.field('File', database.name)
+    prt.field('Driver', database.driver)
+    prt.field('Mode', database.mode)
+    prt.field('Size', size(database))
+    prt.field('Bands', database.count)
+    prt.field('Indexes', database.indexes)
+    prt.field('Types', database.dtypes)
+    prt.field('Nodata', database.nodata)
+    prt.field('Coordnates', database.crs)
     prt.section('Geometry')
-    prt.field('Units', dataset.crs.linear_units)
-    prt.field('Extents', extents(dataset))
-    prt.field('Resolution', resolution(dataset))
-    prt.field('Origin', origin(dataset))
-    prt.field('Width', width(dataset))
+    prt.field('Units', database.crs.linear_units)
+    prt.field('Extents', extents(database))
+    prt.field('Resolution', resolution(database))
+    prt.field('Origin', origin(database))
+    #prt.field('Width', width(database))
     prt.section('Transform')
-    prt.field(dataset.transform)
+    prt.field(database.transform)
     prt.section('Profile')
-    prt.json(dataset.profile)
+    prt.json(database.profile)
     prt.section()
