@@ -10,7 +10,8 @@ import matplotlib.pylab as plt
 #hyd.setProject('data/taudem/logan', 'raw')
 #hyd.setProject('data/rifle/terrain', 'raw')
 #hyd.setProject('data/rifle/terrain', 'masked')
-hyd.setProject('data/mesh', 'mars')
+#hyd.setProject('data/mesh', 'mars')
+hyd.setProject('data/mesh', 'part1')
 
 terrain = gt.open( hyd.project() )
 x,y,z = gt.dem(terrain)

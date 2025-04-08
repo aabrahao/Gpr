@@ -1,6 +1,9 @@
 # Data
 data/
 
+# Images
+*.pdf
+
 # Ros2
 devel/
 logs/

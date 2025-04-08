@@ -9,11 +9,11 @@ def decorateView(plotter):
     plotter.camera.elevation = 5
     plotter.background_color = 'white'
 
-def plotDem(database,title='',edges=False):
+def plotDem(database,title='',edges=False,view=None):
     x,y,z = gt.dem(database)
-    plotMesh(x,y,z,z,title,edges)
+    plotMesh(x,y,z,z,title,edges,view)
 
-def plotMesh(x,y,z,c=None,title='',edges=False):
+def plotMesh(x,y,z,c=None,title='',edges=False,view=None):
     if c is None:
         c = z
     dm.checkIndexing(x,y,z)
@@ -35,10 +35,14 @@ def plotMesh(x,y,z,c=None,title='',edges=False):
             'label_font_size': 10
             }
         )
-    #decorateView(plotter)
+    if view is not None:
+        plotter.camera.azimuth = view[0]
+        plotter.camera.elevation = view[1]
+    if title:
+        plotter.save_graphic(title+'.pdf')
     plotter.show(title=title)
 
-def plotPoints(x,y,z,c=None,title=''):
+def plotPoints(x,y,z,c=None,title='',view=None):
     if c is None:
         c = z
     point_cloud = pv.PolyData(np.column_stack((x, y, z)))
@@ -55,15 +59,22 @@ def plotPoints(x,y,z,c=None,title=''):
                          'label_font_size': 12
                          }
                     )
-    #decorateView(plotter)
+    if view is not None:
+        plotter.camera.azimuth = view[0]
+        plotter.camera.elevation = view[1]
+    if title:
+        plotter.save_graphic(title+'.pdf')
     plotter.show(title=title)
 
-def plotStl(path):
+def plotStl(path,view=None):
     mesh = pv.read( stl.filename(path) )
     plotter = pv.Plotter()
     plotter.add_mesh(mesh, color='lightgray',
                      show_edges=False)
-    # decorateView(plotter)
+    if view is not None:
+        plotter.camera.azimuth = view[0]
+        plotter.camera.elevation = view[1]
+    plotter.save_graphic(path+'stl.pdf')
     plotter.show(stl.filename(path))
 
 # Hepers ###############################################################
