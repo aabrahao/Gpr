@@ -4,11 +4,6 @@ import numpy as np
 import Dem as dm
 import Stl as stl
 
-def decorateView(plotter):
-    plotter.camera.azimuth = -45.0
-    plotter.camera.elevation = 5
-    plotter.background_color = 'white'
-
 def plotDem(database,title='',edges=False,view=None):
     x,y,z = gt.dem(database)
     plotMesh(x,y,z,z,title,edges,view)
@@ -30,16 +25,12 @@ def plotMesh(x,y,z,c=None,title='',edges=False,view=None):
         show_edges=edges,
         scalar_bar_args={
             'title': f'{title}',
-            'vertical': False,
+            'vertical': True,
             'title_font_size': 14,
             'label_font_size': 10
             }
         )
-    if view is not None:
-        plotter.camera.azimuth = view[0]
-        plotter.camera.elevation = view[1]
-    if title:
-        plotter.save_graphic(title+'.pdf')
+    decorate(plotter,title,view)
     plotter.show(title=title)
 
 def plotPoints(x,y,z,c=None,title='',view=None):
@@ -54,28 +45,50 @@ def plotPoints(x,y,z,c=None,title='',view=None):
                      render_points_as_spheres=True,
                      scalar_bar_args={
                          'title': f'{title}',
-                         'vertical': False,
+                         'vertical': True,
                          'title_font_size': 12,
                          'label_font_size': 12
                          }
                     )
-    if view is not None:
-        plotter.camera.azimuth = view[0]
-        plotter.camera.elevation = view[1]
-    if title:
-        plotter.save_graphic(title+'.pdf')
+    decorate(plotter,title,view)
     plotter.show(title=title)
 
-def plotStl(path,view=None):
+def plotStl(path,view=None,edges=False):
     mesh = pv.read( stl.filename(path) )
     plotter = pv.Plotter()
     plotter.add_mesh(mesh, color='lightgray',
-                     show_edges=False)
+                     show_edges=edges)
+    changeBackground(plotter)
+    changeView(plotter,view)
+    savePdf(plotter,path+'stl.pdf')
+    plotter.show(stl.filename(path))
+
+# Decoration##############################################################
+
+def decorate(plotter,title,view):
+    changeBackground(plotter)
+    changeView(plotter,view)
+    changeLegend(plotter)
+    savePdf(plotter,title)
+
+def changeBackground(plotter):
+    plotter.background_color = 'white'
+
+def changeView(plotter, view):
     if view is not None:
         plotter.camera.azimuth = view[0]
         plotter.camera.elevation = view[1]
-    plotter.save_graphic(path+'stl.pdf')
-    plotter.show(stl.filename(path))
+
+def changeLegend(plotter):
+    bar = plotter.scalar_bar
+    x, y = bar.GetPosition()
+    #w = bar.GetWidth()
+    h = bar.GetHeight()
+    bar.SetPosition(x, 0.5 - h/2)
+
+def savePdf(plotter, title):
+    if title:
+        plotter.save_graphic(title+'.pdf')
 
 # Hepers ###############################################################
 
