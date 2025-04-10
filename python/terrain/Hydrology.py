@@ -1,6 +1,8 @@
 
 import os
 import glob
+import Geotiff as gt
+import Dem as dm
 
 g_folder = ''
 g_project = ''
@@ -27,6 +29,17 @@ def run(command):
     print(cmd)
     os.system(cmd)
 
+def pitExtraction():
+    path = project()
+    terrain = gt.open(path)
+    x,y,z = gt.dem(terrain)
+    # Filled pit
+    filled = gt.open(path + 'fel')
+    xf,yf,zf = gt.dem(filled)
+    # Differance
+    zp = zf - z
+    dm.save(x,y,zp,path + 'pit')
+
 def generate():
     # Remove Pits 
     run('PitRemove')
@@ -46,6 +59,7 @@ def generate():
     #run('StreamNet')
     # Twi
     run('TWI')
+    pitExtraction()
 
 def delete(file):
     if file == project():

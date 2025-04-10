@@ -3,7 +3,18 @@ import pyvista as pv
 import numpy as np
 import Dem as dm
 import Stl as stl
+import matplotlib.pyplot as plt
 
+g_save_image = False
+g_window_background = 'white'
+g_colormap = 'jet'
+g_mesh_color = 'lightgray'
+g_point_size = 8
+
+def saveImages(save):
+    global g_save_image
+    g_save_image = save
+    
 def plotDem(database,title='',edges=False,view=None):
     x,y,z = gt.dem(database)
     plotMesh(x,y,z,z,title,edges,view)
@@ -14,24 +25,15 @@ def plotMesh(x,y,z,c=None,title='',edges=False,view=None):
     dm.checkIndexing(x,y,z)
     xg, yg = dm.grid(x,y)
     grid = pv.StructuredGrid(*(xg, yg), z)
-    cmap = c.flatten(order="F")
     # Plot with colormap
     plotter = pv.Plotter()
     plotter.add_mesh( 
         grid, 
-        scalars=cmap, 
-        cmap='jet',
-        show_scalar_bar=True,
-        show_edges=edges,
-        scalar_bar_args={
-            'title': f'{title}',
-            'vertical': True,
-            'title_font_size': 14,
-            'label_font_size': 10
-            }
-        )
+        scalars=colormap(c),
+        scalar_bar_args = scalarbar(title),
+        cmap=g_colormap)
     decorate(plotter,title,view)
-    plotter.show(title=title)
+    plotter.show(title=title,auto_close=False)
 
 def plotPoints(x,y,z,c=None,title='',view=None):
     if c is None:
@@ -39,56 +41,126 @@ def plotPoints(x,y,z,c=None,title='',view=None):
     point_cloud = pv.PolyData(np.column_stack((x, y, z)))
     plotter = pv.Plotter()
     plotter.add_mesh(point_cloud, 
-                     scalars=c, 
-                     point_size=8,
-                     cmap='jet',
-                     render_points_as_spheres=True,
-                     scalar_bar_args={
-                         'title': f'{title}',
-                         'vertical': True,
-                         'title_font_size': 12,
-                         'label_font_size': 12
-                         }
-                    )
+                     scalars=colormap(c), 
+                     cmap=g_colormap,
+                     scalar_bar_args = scalarbar(title),
+                     point_size=g_point_size,
+                     render_points_as_spheres=True)
     decorate(plotter,title,view)
-    plotter.show(title=title)
+    plotter.show(title=title,auto_close=False)
 
 def plotStl(path,view=None,edges=False):
     mesh = pv.read( stl.filename(path) )
     plotter = pv.Plotter()
-    plotter.add_mesh(mesh, color='lightgray',
-                     show_edges=edges)
+    plotter.add_mesh(mesh, color=g_mesh_color, show_edges=edges)
     changeBackground(plotter)
     changeView(plotter,view)
     savePdf(plotter,path+'stl.pdf')
-    plotter.show(stl.filename(path))
+    plotter.show(stl.filename(path),auto_close=False)
 
-# Decoration##############################################################
+def plotHystogram(v,n=25):
+    x = v.copy()
+    x = x.flatten()
+    print(f'Mean: {np.nanmean(x)}')
+    print(f'Std: {np.nanmean(x)}')
+    print(f'Std: {np.nanmean(x)}')
+    print(f'Zscore: {zscore(x)}')
+    print(f'Max: {np.nanmax(x)}')
+    print(f'Max: {np.nanmin(x)}')
+    plt.hist(x, bins=n, 
+             color='skyblue', 
+             edgecolor='black', 
+             alpha=0.7)
+    plt.show(auto_close=False)
 
-def decorate(plotter,title,view):
+# Stats ##############################################################
+
+def zscore(data):
+    return (data - np.nanmean(data)) / np.nanstd(data)
+
+# Decoration ##############################################################
+
+def scalarbar(title):
+    args = {'title' :  title,
+            #'mapper' : None,
+            #'n_labels' : 5,
+            #'italic' : False,
+            #'bold' : False,
+            #'title_font_size' : None,
+            #'label_font_size' : None,
+            #'color' : None,
+            #'font_family' : None,
+            #'shadow' : False,
+            #'width' : None,
+            #'height' : None,
+            #'position_x' : None,
+            #'position_y' : None,
+            'vertical' : True
+            #'interactive' : None,
+            #fmt' : None,
+            #'use_opacity' : True,
+            #'outline' : False,
+            #'nan_annotation' : False,
+            #'below_label' : None,
+            #'above_label' : None,
+            #'background_color' : None,
+            #'n_colors' : None,
+            #'fill' : False,
+            #'render' : False,
+            #'theme' : None,
+            #'unconstrained_font_size' : False
+            }
+    return args
+
+def colormap(c):
+    return c.flatten(order="F")
+
+def decorate(plotter, title, view):
     changeBackground(plotter)
-    changeView(plotter,view)
-    changeLegend(plotter)
+    changeView(plotter, view)
+    #addScalarbar(plotter, title)
+    rearrangeScalabar(plotter)
     savePdf(plotter,title)
 
 def changeBackground(plotter):
-    plotter.background_color = 'white'
+    plotter.background_color = g_window_background
 
 def changeView(plotter, view):
-    if view is not None:
-        plotter.camera.azimuth = view[0]
-        plotter.camera.elevation = view[1]
+    plotter.enable_parallel_projection()
+    plotter.view_xy() 
+    #if view is not None:
+    #    plotter.camera.azimuth = view[0]
+    #    plotter.camera.elevation = view[1]
 
-def changeLegend(plotter):
+def savePdf(plotter, title):
+    if title and g_save_image:
+        plotter.save_graphic(title+'.pdf')
+
+def addScalarbar(plotter, title):
+    plotter.add_scalar_bar(
+        title=title,
+        #n_labels=5,                   # Number of labels to display
+        #position_x=0.1,               # X position (normalized from 0 to 1)
+        #position_y=0.05,              # Y position (normalized from 0 to 1)
+        #width=0.6,                    # Width (normalized)
+        #height=0.05,                  # Height (normalized)
+        label_font_size=12,           # Font size of labels
+        title_font_size=16,           # Font size of title
+        shadow=True,                  # Add a shadow
+        italic=False,                 # Italic text
+        fmt="%.2f",                   # Format string for labels
+        interactive=True,             # Allow user to interact with scalar bar
+        vertical=True,                # Vertical or horizontal orientation
+        color='black',                # Text color
+        font_family="arial"           # Font family
+        )
+
+def rearrangeScalabar(plotter):
     bar = plotter.scalar_bar
     x, y = bar.GetPosition()
     #w = bar.GetWidth()
     h = bar.GetHeight()
     bar.SetPosition(x, 0.5 - h/2)
-
-def savePdf(plotter, title):
-    if title:
-        plotter.save_graphic(title+'.pdf')
 
 # Hepers ###############################################################
 
@@ -104,12 +176,13 @@ def info(x,y,z,var=''):
     if var:
         print('--------------')
         print(var)
-    disp('x', x)
-    disp('y', y)
-    disp('z', z)
+    disp(x, 'x')
+    disp(y, 'y')
+    disp(z, 'z')
 
-def disp(var, x):
-    print(var, end=': ')
+def disp(x,var=''):
+    if var:
+        print(var, end=': ')
     if x.ndim == 1:
         print(f'shape: [{x.shape[0]}]', end =', ')
         v = x

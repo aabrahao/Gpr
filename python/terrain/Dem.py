@@ -51,6 +51,12 @@ def toPoints(x,y,z):
 def grid(x,y):
     return np.meshgrid(x,y,indexing='xy')
 
+def xy(x,y,xp,yp): # xp, and yp [0, 1]
+    xmin, ymin, xmax, ymax = dm.extents(x,y)
+    xs = xmin + xp*(xmax - xmin)
+    ys = ymin + yp*(ymax - ymin)
+    return xs, ys
+
 def extents(x,y):
     xmin = min(x)
     ymin = min(y)

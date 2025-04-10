@@ -13,32 +13,13 @@ def main():
     #hyd.setProject('data/rifle/terrain', 'masked')
     #hyd.setProject('data/rifle/terrain', 'raw')
 
-    #hyd.setProject('data/mesh', 'mars')
-    #view=(45,5)
-
-    hyd.setProject('data/mesh', 'part1')
-    view=(-45.0,5)
-
-    # Pointcloud
-    mesh = st.load( hyd.project() )
-    xp,yp,zp = st.vertices(mesh)
-    vz.plotPoints(xp,yp,zp,zp,hyd.project()+'pcl',view=view)
-
-    return
-
-    # Stl
-    #vz.plotStl(hyd.project(),view=view,edges=False)
+    hyd.setProject('data/mesh/terrains', 'mars')
+    view=(45,5)
 
     # Mesh
     database = gt.open( hyd.project() )
     x,y,z = gt.dem(database)
-    #vz.plotMesh(x,y,z,z,hyd.project(),view=view)
-    
-    # Pit
-    filled = gt.open( hyd.project() + 'fel' )
-    xf,yf,zf = gt.dem(filled)
-    zp = zf - z
-    vz.plotMesh(x,y,z,zp,hyd.project()+'pit',view=view)
+    vz.plotMesh(x,y,z,z,hyd.project(),view=view)
 
     # Hydology
     files = hyd.outputs()

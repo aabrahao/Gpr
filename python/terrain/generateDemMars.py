@@ -5,7 +5,7 @@ import Stl as stl
 
 import Visualization as vz
 
-path = 'data/mesh/mars'
+path = 'data/mesh/terrains/mars'
 
 mesh = stl.load(path)
 x,y,z = stl.vertices(mesh)
@@ -18,7 +18,7 @@ z = 0.1*z
 dx = 0.1*1 # m
 
 vz.info(x,y,z,'Pointcloud')
-vz.plotPoints(x,y,z,z)
+#vz.plotPoints(x,y,z,z)
 
 xs,ys,zs = pc.resample(x,y,z,dx, method='nearest')
 xs,ys,zs = dm.shrink(xs,ys,zs,100)
@@ -33,3 +33,10 @@ dm.save(xs,ys,zs,path)
 database = gt.open(path)
 gt.info(database)
 vz.plotDem(database)
+
+w = max(xs) - min(xs)
+h = max(ys) - min(ys)
+
+print('#########################################################')
+print(f"w: {w}")
+print(f"H: {h}")

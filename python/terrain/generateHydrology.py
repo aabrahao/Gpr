@@ -16,8 +16,8 @@ import Geotiff as gt
 #hyd.setProject('data/rifle/terrain', 'raw')
 #hyd.generate()
 
-#hyd.setProject('data/mesh', 'mars')
-#hyd.generate()
-
-hyd.setProject('data/mesh', 'part1')
+hyd.setProject('data/mesh/terrains', 'mars')
 hyd.generate()
+
+#hyd.setProject('data/mesh', 'part1')
+#hyd.generate()
