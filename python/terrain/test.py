@@ -1,49 +1,34 @@
-import pyvista
-from pyvista import examples
-import time
+import numpy as np
+from scipy import ndimage
+import matplotlib.pyplot as plt
 
-# load and shrink airplane
-airplane = pyvista.PolyData(examples.planefile)
-airplane.points /= 10 # shrink by 10x
+np.random.seed(1)
+n = 10
+l = 256
+im = np.zeros((l, l))
+points = l*np.random.random((2, n**2))
+im[(points[0]).astype(int), (points[1]).astype(int)] = 1
+im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
 
-# rotate and translate ant so it is on the plane
-ant = pyvista.PolyData(examples.antfile)
-ant.rotate_x(90, inplace=True)
-ant.translate([90, 60, 15], inplace=True)
+mask = im > im.mean()
 
-# Make a copy and add another ant
-ant_copy = ant.copy()
-ant_copy.translate([30, 0, -10], inplace=True)
+label_im, nb_labels = ndimage.label(mask)
 
-# Create plotter object
-plotter = pyvista.Plotter()
-plotter.add_mesh(ant, 'r')
-plotter.add_mesh(ant_copy, 'b')
+# Find the largest connected component
+sizes = ndimage.sum(mask, label_im, range(nb_labels + 1))
+mask_size = sizes < 1000
+remove_pixel = mask_size[label_im]
+label_im[remove_pixel] = 0
+labels = np.unique(label_im)
+label_im = np.searchsorted(labels, label_im)
 
-# Add airplane mesh and make the color equal to the Y position. Add a
-# scalar bar associated with this mesh
-plane_scalars = airplane.points[:, 1]
-plotter.add_mesh(airplane, scalars=plane_scalars,
-                 scalar_bar_args={'title': 'Airplane Y\nLocation'})
+# Now that we have only one connected component, extract it's bounding box
+slice_x, slice_y = ndimage.find_objects(label_im==4)[0]
+roi = im[slice_x, slice_y]
 
-# Add annotation text
-plotter.add_text('Ants and Plane Example')
-plotter.show()
+plt.figure(figsize=(4, 2))
+plt.axes([0, 0, 1, 1])
+plt.imshow(roi)
+plt.axis('off')
 
-# Initialize plotter
-plotter.show(auto_close=False, interactive_update=True)
-
-# Create animation by updating the point position
-t = 0
-dt = 0.1
-while True:
-    x = np.sin(t)
-    y = np.cos(t)
-    ant.translate([x, y, 0], inplace=True)
-
-    plotter.update()
-    time.sleep(0.03)
-    t = t + dt
-
-# Close the plotter when animation is done
-plotter.close()
+plt.show()

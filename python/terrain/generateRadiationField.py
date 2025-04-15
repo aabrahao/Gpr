@@ -1,49 +1,64 @@
+import numpy as np
+import matplotlib.pylab as plt
+
 import Hydrology as hyd
 import Geotiff as gt
 import Dem as dm
 import Visualization as vz
 import numpy as np
 import Stl as st
+import Numeric as nm
 
-import matplotlib.pylab as plt
+import GaussianProcess as gp
+import GammaSource as gs
 
+def generateRandomField(x,y,Z, sources, max_strength, radious):
+    xs, ys, zs = dm.sample(x,y,Z, sources)
+    ss = nm.rand( sources )
+    I = 0*Z
+    for i in range(sources):
+        s = gs.Point(xs[i], ys[i], ss[i], radious)
+        I = I + s.dem(x,y)
+        print(f'Gamma source: {i} of {sources}')
+    return I
 
-def rad(x,y,xp, yp, p):
-    xx,yy = np.meshgrid(x,y)
-    r = np.sqrt( np.power(xx-xp,2) + np.power(yy-yp,2) )
-    i = p/(4*np.pi*(r*r))
-    i[i>p] = p
-    return i
-
-def rand():
-    return np.random.random()
+def generate(path, view, sources, strength, radious, training):
+    # Dataset
+    dataset = gt.open( path )
+    gt.info(dataset)
+    x,y,Z = gt.dem(dataset)
+    # Field
+    I = generateRandomField(x,y,Z,sources,strength,radious)
+    vz.plotMesh(x,y,Z,I,path+'rad',view=view)
+    # Training
+    xt,yt,it = dm.sample(x,y,I,training)
+    estimator = gp.Estimator()
+    estimator.fit(xt,yt,it)
+    # Prediction
+    IM, IS = estimator.dem(x,y)
+    vz.plotMesh(x,y,Z,IM,path + 'radmean',view=view)
+    vz.plotMesh(x,y,Z,IS,path + 'radstd',view=view)
+    # Save
+    dm.save(x,y,I ,path+'rad')
+    dm.save(x,y,IM,path+'radmean')
+    dm.save(x,y,IS,path+'radstd')
 
 def main():
- 
-    path = 'data/mesh/terrains/mars'
-    view=(45,5)
-
-    #path = 'data/mesh/part1'
-    #view=(-45.0,5)
-
-    database = gt.open( path )
-    x,y,z = gt.dem(database)
-
-    xs, ys = dm.xy(x,y,0.5,0.5)
-    ps = 1
-    i = rad(x,y,xs,ys,ps)
-
-    n = 3
-    for j in range(200):
-        print(f'{j} ({j/n}%%)')
-        xr = rand()
-        yr = rand()
-        p = 1*rand()
-        xs, ys = dm.xy(x,y,xr,yr)
-        i = i + rad(x,y,xs,ys,ps)
-
-    vz.plotMesh(x,y,z,i,path + 'rad',view=view)
-    dm.save(x,y,i,path + 'rad') 
+    vz.saveImages(True)
+    #generate('data/mesh/terrains/mars',
+    #          view=(45,5), 
+    #          sources = 100, 
+    #          strength = 1.0, 
+    #          radious  = 5.0, 
+    #          training = 100)
+    #generate('data/mesh/models/part1', 
+    #         view=(-45.0,5), 
+    #         sources = 100,
+    #         strength = 1.0, 
+    #         radious = 0.2, 
+    #         training = 20)
+    
+    print('All done!')    
 
 if __name__ == "__main__":
     main()

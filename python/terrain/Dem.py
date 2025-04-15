@@ -5,6 +5,10 @@ import Dem as dm
 import rasterio
 from rasterio.transform import from_origin
 
+import Geotiff as gt
+
+import Numeric as nm
+
 # DEM
 # x: vector
 # y: vector
@@ -51,17 +55,44 @@ def toPoints(x,y,z):
 def grid(x,y):
     return np.meshgrid(x,y,indexing='xy')
 
+def points(x,y):
+    X, Y = grid(x, y)
+    X = X.flatten()
+    Y = Y.flatten()
+    return X, Y
+
+def shape(x,y):
+    nx = x.size
+    ny = y.size
+    return (ny, nx)
+
+def size(x,y):
+    nx, ny = shape(x,y)
+    return nx*ny
+
+def flatten(x,y,Z):
+    X, Y = points(x,y)
+    return X, Y, Z.flatten()
+
+def unflatten(x,y,Z):
+    return Z.reshape( shape(x,y) )
+
 def xy(x,y,xp,yp): # xp, and yp [0, 1]
     xmin, ymin, xmax, ymax = dm.extents(x,y)
     xs = xmin + xp*(xmax - xmin)
     ys = ymin + yp*(ymax - ymin)
     return xs, ys
 
+def sample(x,y,Z,n):
+    i = nm.irand(0, Z.size-1, n)
+    X,Y,ZS = flatten(x,y,Z)
+    return X[i], Y[i], ZS[i]
+
 def extents(x,y):
-    xmin = min(x)
-    ymin = min(y)
-    xmax = max(x)
-    ymax = max(y)
+    xmin = np.nanmin(x)
+    ymin = np.nanmin(y)
+    xmax = np.nanmax(x)
+    ymax = np.nanmax(y)
     return xmin, ymin, xmax, ymax
 
 def resample(x,y,z,ds,method='linear'):
@@ -83,3 +114,26 @@ def shrink(x,y,z,border):
     zr = z[border:-border, border:-border]
     checkIndexing(xr,yr,zr)
     return xr,yr,zr
+
+####################################################
+
+#class Dem:
+#    def __init__(self,path):
+#        dataset = gt.open(path+'.tif')
+#        self.path = path
+#        self.xmin, self.ymin, self.xmax, self.ymax = gt.extents(dataset)
+#        self.z = gt.data(dataset)
+#    def nx(self):
+#        self.z.shape[1]
+#    def ny(self):
+#        self.z.shape[2]
+#    def x(self):
+#        return np.linspace(self.xmin, self.xmax, self.nx())
+#    def y(self):
+#        return np.linspace(self.ymin, self.ymax, self.ny())
+#    def z(self):
+#        return self.z
+#    def xy(self):
+
+
+#########################################################################

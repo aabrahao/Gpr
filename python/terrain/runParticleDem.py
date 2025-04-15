@@ -76,8 +76,6 @@ def main():
         a.move( xn, yn )
         plt.pause(.01)
         t += dt
-
-    canvas.show()
-    
+   
 if __name__ == "__main__":
     main() 

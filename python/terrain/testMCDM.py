@@ -45,8 +45,8 @@ def main():
     
     # Criteria
     z1 = criteria(path + 'pit', 0.005)
-    z2 = criteria(path + 'twi', 1.4)
-    z3 = criteria(path + 'rad', 5.0)
+    z2 = criteria(path + 'twi', 2.0)
+    z3 = criteria(path + 'rad', 0.0)
     z4 = criteria(path,         0.6, 1.5)
     
     vz.disp(z1)
@@ -60,11 +60,11 @@ def main():
     zm[np.isclose(zm,0.0)] = np.nan
     vz.disp(zm)
 
-    plot(x,y,z,z1, path + '-c1-pit',view)
-    plot(x,y,z,z2, path + '-c2-twi',view)
-    plot(x,y,z,z3, path + '-c3-ang',view)
-    plot(x,y,z,z4, path + '-c5-hst',view)
-    plot(x,y,z,zm, path + '-cmi',view)
+    #plot(x,y,z,z1, path + '-c1-pit',view)
+    #plot(x,y,z,z2, path + '-c2-twi',view)
+    #plot(x,y,z,z3, path + '-c3-ang',view)
+    #plot(x,y,z,z4, path + '-c5-hst',view)
+    #plot(x,y,z,zm, path + '-cmi',view)
 
     dm.save(x,y,zm, path + '-cmi')
 

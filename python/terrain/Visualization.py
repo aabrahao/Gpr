@@ -4,6 +4,7 @@ import numpy as np
 import Dem as dm
 import Stl as stl
 import matplotlib.pyplot as plt
+import os
 
 g_save_image = False
 g_window_background = 'white'
@@ -19,43 +20,47 @@ def plotDem(database,title='',edges=False,view=None):
     x,y,z = gt.dem(database)
     plotMesh(x,y,z,z,title,edges,view)
 
-def plotMesh(x,y,z,c=None,title='',edges=False,view=None):
-    if c is None:
-        c = z
-    dm.checkIndexing(x,y,z)
-    xg, yg = dm.grid(x,y)
-    grid = pv.StructuredGrid(*(xg, yg), z)
-    # Plot with colormap
+def plotMesh(x,y,Z,C=None,title='',edges=False,view=None):
+    dm.checkIndexing(x,y,Z)
+    X, Y = dm.grid(x,y)
+    grid = pv.StructuredGrid(*(X, Y), Z)
     plotter = pv.Plotter()
-    plotter.add_mesh( 
-        grid, 
-        scalars=colormap(c),
-        scalar_bar_args = scalarbar(title),
-        cmap=g_colormap)
-    decorate(plotter,title,view)
+    if C is None:
+        plotter.add_mesh(grid, 
+                         color=g_mesh_color,
+                         show_edges=edges)
+    else:
+        plotter.add_mesh( 
+            grid, 
+            scalars=colormap(C),
+            scalar_bar_args = scalarbar(title),
+            show_edges=edges,
+            cmap=g_colormap)
+    decorate(plotter,title,view,C)
     plotter.show(title=title,auto_close=False)
 
 def plotPoints(x,y,z,c=None,title='',view=None):
-    if c is None:
-        c = z
+    C = c.copy()
+    if C is None:
+        C = z
     point_cloud = pv.PolyData(np.column_stack((x, y, z)))
     plotter = pv.Plotter()
     plotter.add_mesh(point_cloud, 
-                     scalars=colormap(c), 
+                     scalars=colormap(C), 
                      cmap=g_colormap,
                      scalar_bar_args = scalarbar(title),
                      point_size=g_point_size,
                      render_points_as_spheres=True)
-    decorate(plotter,title,view)
+    decorate(plotter,title,view,C)
     plotter.show(title=title,auto_close=False)
 
-def plotStl(path,view=None,edges=False):
+def plotStl(path,view=None,edges=False,title=''):
     mesh = pv.read( stl.filename(path) )
     plotter = pv.Plotter()
     plotter.add_mesh(mesh, color=g_mesh_color, show_edges=edges)
     changeBackground(plotter)
     changeView(plotter,view)
-    savePdf(plotter,path+'stl.pdf')
+    savePdf(plotter,title)
     plotter.show(stl.filename(path),auto_close=False)
 
 def plotHystogram(v,n=25):
@@ -80,8 +85,11 @@ def zscore(data):
 
 # Decoration ##############################################################
 
+def filename(path):
+    return os.path.splitext(os.path.basename(path))[0]
+
 def scalarbar(title):
-    args = {'title' :  title,
+    args = {'title' :  filename(title),
             #'mapper' : None,
             #'n_labels' : 5,
             #'italic' : False,
@@ -112,25 +120,37 @@ def scalarbar(title):
             }
     return args
 
-def colormap(c):
-    return c.flatten(order="F")
+def mad(c):
+    z = c.copy()
+    median = np.median(z)
+    mad = np.median(np.abs(z - median))
+    mod = 0.6745 * np.abs(z - median) / mad
+    m = z.copy()
+    m[mod > 3.5] = np.sign(z[mod > 3.5]) * (median + 3.5*mad)    
+    return m
 
-def decorate(plotter, title, view):
+def colormap(c):
+    z = c.flatten(order="F")
+    #z = mad(z)
+    return z
+
+def decorate(plotter, title, view, c):
     changeBackground(plotter)
     changeView(plotter, view)
-    #addScalarbar(plotter, title)
-    rearrangeScalabar(plotter)
+    if c is not None:
+        moveScalabar(plotter)
     savePdf(plotter,title)
 
 def changeBackground(plotter):
     plotter.background_color = g_window_background
 
 def changeView(plotter, view):
-    plotter.enable_parallel_projection()
-    plotter.view_xy() 
-    #if view is not None:
-    #    plotter.camera.azimuth = view[0]
-    #    plotter.camera.elevation = view[1]
+    if view is not None:
+        plotter.camera.azimuth = view[0]
+        plotter.camera.elevation = view[1]
+    else:
+        plotter.enable_parallel_projection()
+        plotter.view_xy() 
 
 def savePdf(plotter, title):
     if title and g_save_image:
@@ -155,10 +175,9 @@ def addScalarbar(plotter, title):
         font_family="arial"           # Font family
         )
 
-def rearrangeScalabar(plotter):
+def moveScalabar(plotter):
     bar = plotter.scalar_bar
     x, y = bar.GetPosition()
-    #w = bar.GetWidth()
     h = bar.GetHeight()
     bar.SetPosition(x, 0.5 - h/2)
 
