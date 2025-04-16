@@ -1,6 +1,6 @@
 import Hydrology as hyd
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Visualization as vz
 import numpy as np
 import Stl as st
@@ -24,14 +24,11 @@ def plot(path, name,view):
         vz.plotMesh(x,y,z,c,file,view=view)
 
 def main():
-    vz.saveImages(True)
-    #vz.saveImages(False)
-    plot('data/mesh/terrains',
-         'mars', 
-         view=(45.0,5.0))
-    #plot('data/mesh/models',
-    #     'part1', 
-    #     view=(-45.0,5))
+    #vz.saveImages(True)
+    vz.saveImages(False)
+    #plot('data/mesh/terrains','mars',view=(45.0,5.0))
+    #plot('data/mesh/models','part1', view=(-45.0,5))
+    plot('data/mcdm','mars', view=(45.0,5.0))
 
 if __name__ == "__main__":
     main()

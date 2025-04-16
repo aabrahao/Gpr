@@ -1,7 +1,7 @@
 import Geotiff as gt
 import pyvista as pv
 import numpy as np
-import Dem as dm
+import DEM as dm
 import Stl as stl
 import matplotlib.pyplot as plt
 import os
@@ -150,7 +150,8 @@ def changeView(plotter, view):
         plotter.camera.elevation = view[1]
     else:
         plotter.enable_parallel_projection()
-        plotter.view_xy() 
+        plotter.view_xy()
+        plotter.camera.roll = 180
 
 def savePdf(plotter, title):
     if title and g_save_image:

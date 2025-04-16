@@ -1,7 +1,7 @@
 
 import Geotiff as gt
 import Visualization as vz
-import Dem as dm
+import DEM as dm
 
 database = gt.open('data/mesh/mars')
 gt.info(database)

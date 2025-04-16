@@ -1,5 +1,5 @@
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Pointcloud as pc
 import Stl as stl
 

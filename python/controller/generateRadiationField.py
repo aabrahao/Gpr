@@ -3,7 +3,7 @@ import matplotlib.pylab as plt
 
 import Hydrology as hyd
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Visualization as vz
 import numpy as np
 import Stl as st

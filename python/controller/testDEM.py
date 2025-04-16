@@ -1,5 +1,5 @@
 import numpy as np
-import Dem as dm
+import DEM as dm
 import Geotiff as gt
 import Visualization as vz
 

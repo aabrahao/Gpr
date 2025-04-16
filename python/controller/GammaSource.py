@@ -1,6 +1,6 @@
 import numpy as np
 import Numeric as nm
-import Dem as dm
+import DEM as dm
 
 class Point:
     def __init__(self, x, y, strength, radious):

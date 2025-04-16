@@ -2,7 +2,7 @@ import numpy as np
 from stl import mesh
 import pyvista as pv
 
-import Dem as dem
+import DEM as dem
 import Visualization as vz
 
 from scipy.spatial import Delaunay

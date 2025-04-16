@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 
-import Dem as dm
+import DEM as dm
 import rasterio
 from rasterio.transform import from_origin
 
@@ -55,11 +55,15 @@ def toPoints(x,y,z):
 def grid(x,y):
     return np.meshgrid(x,y,indexing='xy')
 
-def points(x,y):
-    X, Y = grid(x, y)
-    X = X.flatten()
-    Y = Y.flatten()
-    return X, Y
+def points(x,y,mask=None):
+    xg, yg = grid(x, y)
+    xg = xg.flatten()
+    yg = yg.flatten()
+    if mask is not None:
+        m = mask.flatten()
+        i = np.where(np.isnan(m) | np.isclose(m,0.0))[0]
+        return xg[i], yg[i]
+    return xg, yg
 
 def shape(x,y):
     nx = x.size
@@ -94,6 +98,10 @@ def extents(x,y):
     xmax = np.nanmax(x)
     ymax = np.nanmax(y)
     return xmin, ymin, xmax, ymax
+
+def lot(x,y):
+    xmin,ymin,xmax,ymax = extents(x,y)
+    return xmax-xmin, ymax-ymin
 
 def resample(x,y,z,ds,method='linear'):
     xmin, ymin, xmax, ymax = extents(x,y)

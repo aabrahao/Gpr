@@ -3,7 +3,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import Matern
 
 import Numeric as nm
-import Dem as dm
+import DEM as dm
 
 class Estimator:
     def __init__(self, length_scale=1.0, nu=1.5):

@@ -2,7 +2,7 @@
 import os
 import glob
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 
 g_folder = ''
 g_project = ''

@@ -4,7 +4,7 @@ from random import random
 import Canvas as cv
 import Particle as pt
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Visualization as vz
 
 from scipy.ndimage import label
@@ -35,7 +35,7 @@ def norm(v):
 
 def image():
     path = 'data/mesh/terrains/mars'
-    database = gt.open(path + '-cmi')
+    database = gt.open(path + '-dsc')
     x,y,z = gt.dem(database)
     return z
 

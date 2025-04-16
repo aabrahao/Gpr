@@ -1,5 +1,5 @@
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Visualization as vz
 
 #database = gt.open('data/taudem/logan/raw')

@@ -11,6 +11,7 @@ def main():
     run('generateDems')
     run('generateHydrology')
     run('generateRadiationField')
+    run('generateHistoricalData')
     run('generateMCDM')
     run('plotAll')
     print('All done!')    

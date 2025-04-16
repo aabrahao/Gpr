@@ -4,7 +4,7 @@ from random import random
 import Canvas as cv
 import Particle as pt
 import Geotiff as gt
-import Dem as dm
+import DEM as dm
 import Visualization as vz
 
 import GraphOptimizer as go
