@@ -37,13 +37,18 @@ def main():
 
     # Antenna coverage
     lx,ly = dm.lot(x,y)
-    antenna = 0.1*lx 
+    antenna = 0.01*lx 
     overlap = 0.2
 
     # Run the algorithm
-    xp, xp = 
-    xc,yc,xr,yr = cls.greedy2(x, y, antenna, overlap)
-    cls.visualize(xc,yc,xr,yr,antenna)
-
+    xp, yp = dm.points(x,y,mask)
+    
+    #cls.benchmark(xp,yp,antenna,overlap)
+    # GPR antenna cover    
+    xc,yc,xr,yr = cls.cluster(xp, yp, antenna, overlap)
+    cls.visualize(xp,yp,xc,yc,xr,yr,antenna,overlap)
+    e = nm.vector()
+    cls.visualize(xc,yc,xc,yc,e,e,antenna,overlap)
+    
 if __name__ == "__main__":
     main()

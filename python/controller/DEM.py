@@ -61,7 +61,7 @@ def points(x,y,mask=None):
     yg = yg.flatten()
     if mask is not None:
         m = mask.flatten()
-        i = np.where(np.isnan(m) | np.isclose(m,0.0))[0]
+        i = np.where(~(np.isnan(m) | np.isclose(m,0.0)))[0]
         return xg[i], yg[i]
     return xg, yg
 

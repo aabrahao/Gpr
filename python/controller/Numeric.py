@@ -1,11 +1,16 @@
 import numpy as np
 
+def vector(n = None):
+    if n is None:
+        return np.array([],dtype=float)
+    return np.zeros(n)
+    
 def points(x,y):
     return np.column_stack([x, y])
 
 def xy(points):
     if len(points) == 0:
-        return np.array([],dtype=float), np.array([],dtype=float)
+        return vector(), vector()
     return points[:,0],points[:,1]
 
 def distance(x1, y1, x2, y2):
@@ -71,7 +76,7 @@ def nanify(Z, value, tol=1e-6):
     return v
 
 def mask(Z, lower, upper=None):
-    M = 0.0*Z
+    M = np.zeros(Z.shape)
     if upper is None:
         M[ Z > lower ] = 1.0
     else:
