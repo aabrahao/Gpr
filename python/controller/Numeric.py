@@ -4,7 +4,7 @@ def vector(n = None):
     if n is None:
         return np.array([],dtype=float)
     return np.zeros(n)
-    
+
 def points(x,y):
     return np.column_stack([x, y])
 
@@ -14,8 +14,8 @@ def xy(points):
     return points[:,0],points[:,1]
 
 def distance(x1, y1, x2, y2):
-        return np.sqrt( np.power(x1-x2,2) + 
-                        np.power(y1-y2,2) )
+        return np.sqrt( (x1-x2)**2 +(y1-y2)**2 )
+
 def flatten(m):
     return m.flatten()
 
@@ -58,6 +58,11 @@ def trim(v, vmin, vmax=None, value=0.0):
     if vmax is not None:
         x[x > vmax] = value
     return x
+
+def length(x,y):
+    dx = np.diff(x)
+    dy = np.diff(y)
+    return np.sum( np.sqrt(dx**2 + dy**2) )
 
 def normalize(x):
     xmin = np.nanmin(x)
