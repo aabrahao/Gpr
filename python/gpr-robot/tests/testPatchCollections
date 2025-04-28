@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+from matplotlib.collections import PatchCollection
+import matplotlib.transforms as transforms
+import copy
+
+fig, ax = plt.subplots(figsize=(10, 8))
+ax.set_xlim(-100, 100)
+ax.set_ylim(-100, 100)
+ax.set_aspect('equal')
+ax.grid(True)
+
+r1 = patches.Rectangle((5,5), 5, 3, color='orange')
+r2 = patches.Rectangle((10,15), 10, 20, color='magenta')
+c1 = patches.Circle((-5,-5), 20, color='cyan')
+
+ax.add_patch(r1)
+ax.add_patch(r2)
+ax.add_patch(c1)
+
+rr1 = patches.Rectangle((5,5), 5, 3, color='red')
+rr2 = patches.Rectangle((10,15), 10, 20, color='blue')
+rc1 = patches.Circle((-5,-5), 20, color='yellow')
+
+# Create a PatchCollection
+collection = PatchCollection([rr1,rr2,rc1], match_original=True)
+
+# Add collection to axes
+ax.add_collection(collection)
+
+for angle in np.linspace(0,2*np.pi,8):
+    r1.set_height(10*angle)
+    transform = transforms.Affine2D()
+    transform.translate(2, 1)  # Move
+    transform.rotate(angle)
+    collection.set_transform(transform + collection.axes.transData)
+    plt.pause(.1)
+    print(f'Angle: {angle}')
+
+plt.show()
